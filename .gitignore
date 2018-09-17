@@ -1,5 +1,7 @@
 # Environment Variables
 **/.env
+**/public
+**/dist
 
 # System Files
 .DS_Store
