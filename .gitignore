@@ -1,0 +1,42 @@
+# Environment Variables
+**/.env
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# dependencies
+**/node_modules
+
+# IDEs and editors
+**/.idea
+**/.project
+**/.classpath
+**/.c9/
+**/*.launch
+**/.settings/
+**/*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### Angular6 .gitignore
+
+# compiled output
+client/dist
+client/tmp
+client/out-tsc
+
+# misc
+client/.sass-cache
+client/connect.lock
+client/coverage
+client/libpeerconnection.log
+client/npm-debug.log
+client/yarn-error.log
+client/testem.log
+client/typings

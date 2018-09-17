@@ -1,0 +1,23 @@
+{
+  "name": "sf-log-analyzer-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "start": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' server.ts"
+  },
+  "author": "Ben Vogler",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/jsforce": "^1.8.16",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsforce": "^1.9.1",
+    "nodemon": "^1.18.4"
+  }
+}

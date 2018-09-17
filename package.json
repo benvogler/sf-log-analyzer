@@ -1,0 +1,15 @@
+{
+  "name": "sf-log-analyzer",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "start": "concurrently -n \"client,server\" \"cd client && npm start\" \"cd server && npm start\"",
+    "build": "cd client && npm run build"
+  },
+  "author": "Ben Vogler",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
