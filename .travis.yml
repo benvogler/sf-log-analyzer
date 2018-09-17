@@ -1,5 +1,10 @@
 language: node_js
 
+cache:
+  - node_modules
+  - client/node_modules
+  - server/node_modules
+
 notifications:
   email:
     on_success: never
@@ -28,4 +33,5 @@ deploy:
   api_key:
     secure: lW34ojC+OxQ148VZKJWkI8UsGv708Dnosj3GiGwmGRdA8R1LAJlehRpF/7yhk+VDT2QjftZy3iwg2fnCWh0D4+kqq5oHNxX2JF/EAoIUBpP+K2vp+6Ks3tdlc0F+vV4Xt7lwcUUeL0Y0Ua7R5cTthnc0olz8FmIXMTetq7bMWlf4FOzcUpizJOYz1Lhnh3qqkuCxmUUEwY7L47eQmQUZ+kw8xbTTPuizoEF4qptp2Axyhnet84LQAOVp5ThhomkzaX+Xddqrw1ezZa9zkkx9Y1zv44zOIoiVZwLpJIxiplEw+cd8x4JBHSa4kLrCgeEk/WAd/I7irHMNd97F4wyfbDh+zh+ycFb1UChuLho2mqQgb5nEfDUmxKaCf9hkGgcACoRYkgxdQaK+dhWrojnOBxkq28VVXwkcU/HKpfQfBqe4ftGmIkTCe6JuXaVRxu5bB8NShCUb+KUeu48EzSTpGFkGCOXM3sQZnPCxEzhjJeglbziDMEyAGQzU6kvuvPQhA3OPws05l3GRx0P6CKsfwkBSsuatIhOmJa0YpahDWbq/k5qTbc2MxcGEa1BOPg0PvbV6Y8giYel9YZ1+CvAY9oQoXWEQq+vBFZOPTClsp4NQaNv4iG2nsWLXPuLHdUBdKhjFAIyWbA7RUI8ezzn27BhYrzqmDpFX7/3fbx71nv8=
     app: sf-log-analyzer-dev
-    on: dev
+    on:
+      repo: benvogler/sf-log-analyzer
