@@ -36,3 +36,6 @@ deploy:
   skip_cleanup: true
   on:
     branch: dev
+    app: sf-log-analyzer-dev
+    on:
+      repo: benvogler/sf-log-analyzer
