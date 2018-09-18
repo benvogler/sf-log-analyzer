@@ -40,6 +40,7 @@ app.post('/api/demo', sessionRoutes.loginToDemo);
 app.post('/api/login', sessionRoutes.login);
 app.get('/oauth2/callback', sessionRoutes.completeLogin);
 app.get('/api/session', sessionRoutes.nextIfAuthenticated, sessionRoutes.getSession);
+app.post('/api/logout', sessionRoutes.nextIfAuthenticated, sessionRoutes.logout);
 
 // Start Server
 app.listen(process.env.PORT, () => console.log(`Server online on port ${process.env.PORT}`));

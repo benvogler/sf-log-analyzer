@@ -13,10 +13,13 @@ export class SidebarComponent implements OnInit {
 
     constructor(private sessionService: SessionService) {
         this.session = this.sessionService.session;
-        this.session.subscribe(session => console.log('session', session));
     }
 
     ngOnInit() {
+    }
+
+    logout() {
+        this.sessionService.logout();
     }
 
 }

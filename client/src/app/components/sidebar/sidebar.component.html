@@ -8,8 +8,23 @@
     <div class="item">
         <div class="header">Logs</div>
         <div class="menu">
-            <a class="item">View Logs</a>
-            <a class="item">Run Dynamic Tests</a>
+            <a class="item">
+                View Logs
+                <i class="list icon"></i>
+            </a>
+            <a class="item">
+                Run Dynamic Tests
+                <i class="bug icon"></i>
+            </a>
+        </div>
+    </div>
+    <div class="item">
+        <div class="header">Account</div>
+        <div class="menu">
+            <a class="item" (click)="logout()">
+                Logout
+                <i class="logout icon"></i>
+            </a>
         </div>
     </div>
 </div>

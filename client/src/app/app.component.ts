@@ -13,7 +13,7 @@ export class AppComponent {
 
     constructor(private sessionService: SessionService) {
         // Show the login page until there is a valid session
-        this.sessionService.session.subscribe(session => this.showApp = true);
+        this.sessionService.session.subscribe(session => session ? this.showApp = true : this.showApp = false);
         // Prevent flickering the login page if there is an existing section
         this.sessionService.loading.subscribe(() => this.loading = false);
     }

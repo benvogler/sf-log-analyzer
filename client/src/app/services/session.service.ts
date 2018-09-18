@@ -39,4 +39,9 @@ export class SessionService {
             console.log('demo error', err);
         }
     }
+
+    async logout() {
+        await this.http.post<any>('/api/logout', {});
+        this.session.next(undefined);
+    }
 }

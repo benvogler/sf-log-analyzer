@@ -50,4 +50,9 @@ export class SessionRoutes {
     getSession = (req: Request, res: Response, next: NextFunction) => {
         this.util.respond(res, 200, this.salesforce.getSanitizedSession(req));
     }
+
+    logout = (req: Request, res: Response, next: NextFunction) => {
+        req.session = null;
+        this.util.respond(res, 200);
+    }
 }
