@@ -30,7 +30,8 @@ node_js:
 
 deploy:
   provider: heroku
-  api_key: fc1e15dc-424a-4c6f-b8af-c207dbf8492d
+  api_key: 
+    secure: F2VL36DGbqaZaBKgVpzGFfvnimlAxlJWfVDBQvq1hP30TpQK+WD/q4qv3VRcQObE3f6AhzWtFao3RqaUJi568Z6MkAD3z3tNzsa+xmyBf+P5SFLCHln+H9PM3e1iaVHzBpTmUkYY9R0kky2GZFjCl9ye6JFBROhcqBmZrqDG9PLs1Kz69S8Bh1iJwbQFlEjJWbajN21Z0mmKKiNNVkCZWET+j6fdz90NmraWrzFtUIjT5mOui8hKvzIQm2U/gerMoVcPQWav3qA4AKSWVRJAozuiHRZ7st4K7Cr8/LbiASgLm6o/imgjNiWdtrza2aJblHwBXkqp1e5SNYEwf2tDQ90lIfUNmSSbsAOBRThJv1SF/aHLANUNFWi48fuMoEFNFQBjIjY7Y9QQRdYsIFw1UIjXZwa0LOgZDeKe8H3cMimkaAdci6Gu8Bbug2KcWEvuvWxBvBHrOtALXuzsZftXdZspYX9Xz/D+eMDi/6WQ1GjZpFm9uV42spWQ/qflRKttztA9hPpYXUtp+OG2qKBkvESEaOM8V0xeZAPy31/nJNcDlOydSNn3VF3G2eJvGGH58lD+KRBP15tsFsCR3ja9rEg5c9ajoMxGyQoDAUK3VckGCfR3hr3NDdzQ5gjOa7QQrtrDMxvZEEADhUsQGMTDTBi3cpew237biFiP8GEzZAg=
   app: sf-log-analyzer
   on:
     branch: dev
