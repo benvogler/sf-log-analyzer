@@ -1,9 +1,15 @@
-<div class="ui vertical menu">
+<div class="ui vertical menu" style="height: 100%">
     <div class="item">
-        <div class="header">Products</div>
+        <ng-container *ngIf="session | async; let session">
+            <img class="ui avatar image" [src]="session?.chatterInfo?.photo?.smallPhotoUrl">
+            <span class="ui sub header">{{session?.chatterInfo?.displayName}}</span>
+        </ng-container>
+    </div>
+    <div class="item">
+        <div class="header">Logs</div>
         <div class="menu">
-            <a class="item">Enterprise</a>
-            <a class="item">Consumer</a>
+            <a class="item">View Logs</a>
+            <a class="item">Run Dynamic Tests</a>
         </div>
     </div>
 </div>

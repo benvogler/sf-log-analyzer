@@ -23,9 +23,8 @@ export class SessionRoutes {
     loginToDemo = async (req: Request, res: Response, next: NextFunction) => {
         try {
             let { userInfo, conn } = await this.salesforce.loginToDemo();
-            this.salesforce.setSessionAuthentication(req, userInfo, conn);
-            console.log(req.session);
-            this.util.respond(res, 200, 'Authenticated successfully');
+            await this.salesforce.setSessionAuthentication(req, userInfo, conn);
+            this.util.respond(res, 200, this.salesforce.getSanitizedSession(req));
         } catch (err) {
             console.error('/api/demo error', err);
             this.util.respond(res, 500, 'Internal server error');
@@ -35,8 +34,7 @@ export class SessionRoutes {
     completeLogin = async (req: Request, res: Response, next: NextFunction) => {
         try {
             let { userInfo, conn } = await this.salesforce.completeLogin(req.param('code'));
-            this.salesforce.setSessionAuthentication(req, userInfo, conn);
-            console.log(req.session);
+            await this.salesforce.setSessionAuthentication(req, userInfo, conn);
             res.redirect(`${req.protocol}://${req.hostname}:${process.env.ENVIRONMENT !== 'local' ? process.env.PORT : 4200}`);
         } catch (err) {
             console.error('/oauth2/callback error', err);
@@ -50,8 +48,6 @@ export class SessionRoutes {
     }
 
     getSession = (req: Request, res: Response, next: NextFunction) => {
-        let session = Object.create(req.session || {});
-        delete session.authorization;
-        this.util.respond(res, 200, session);
+        this.util.respond(res, 200, this.salesforce.getSanitizedSession(req));
     }
 }

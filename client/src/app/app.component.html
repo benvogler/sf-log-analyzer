@@ -1,7 +1,12 @@
 <div class="container" *ngIf="!loading">
 
-    <div *ngIf="showApp; else login">
-        Welcolme to the app
+    <div *ngIf="showApp; else login" class="page" fxLayout="row">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-container">
+            <div class="page">
+                content
+            </div>
+        </div>
     </div>
 
     <ng-template #login>

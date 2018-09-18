@@ -35,7 +35,8 @@ export class SalesforceService {
         return {userInfo: userInfo, conn: conn};
     }
 
-    setSessionAuthentication(req: Request, userInfo: jsforce.UserInfo, conn: jsforce.Connection) {
+    async setSessionAuthentication(req: Request, userInfo: jsforce.UserInfo, conn: jsforce.Connection) {
+        let chatterInfo: any = await conn.chatter.resource('/users/me').retrieve();
         req.session = {
             authentication: {
                 accessToken: conn.accessToken,
@@ -43,7 +44,16 @@ export class SalesforceService {
                 instanceUrl: conn.instanceUrl,
                 userId: userInfo.id,
                 organizationId: userInfo.organizationId
-            }
+            },
+            chatterInfo: chatterInfo
         }
+        console.log('Session', req.session);
+    }
+
+    getSanitizedSession(req: Request) {
+        let session = JSON.parse(JSON.stringify(req.session));
+        delete session.authentication;
+        console.log('sanitized session', session);
+        return session;
     }
 }

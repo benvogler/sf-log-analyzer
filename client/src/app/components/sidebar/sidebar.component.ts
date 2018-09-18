@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../services/session.service';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
     selector: 'app-sidebar',
@@ -7,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-    constructor() { }
+    session: ReplaySubject<any>;
+
+    constructor(private sessionService: SessionService) {
+        this.session = this.sessionService.session;
+        this.session.subscribe(session => console.log('session', session));
+    }
 
     ngOnInit() {
     }
