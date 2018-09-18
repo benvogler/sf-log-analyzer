@@ -14,7 +14,7 @@ before_install:
   - nvm install $NODE
 
 install:
-  - npm i && cd server && npm i && cd ../client && npm i
+  - npm i && cd server && npm i && cd ../client && npm i && cd ..
 
 before_script:
   - npm i -g typescript
