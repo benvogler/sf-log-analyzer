@@ -16,9 +16,8 @@ before_install:
 install:
   - npm i && cd server && npm i && cd ../client && npm i
 
-before_script:
-  npm i -g typescript
-
+before_script: 
+  - npm i -g typescript
 script:
   - npm run build
 
@@ -31,7 +30,7 @@ node_js:
 deploy:
   provider: heroku
   api_key:
-    secure: lW34ojC+OxQ148VZKJWkI8UsGv708Dnosj3GiGwmGRdA8R1LAJlehRpF/7yhk+VDT2QjftZy3iwg2fnCWh0D4+kqq5oHNxX2JF/EAoIUBpP+K2vp+6Ks3tdlc0F+vV4Xt7lwcUUeL0Y0Ua7R5cTthnc0olz8FmIXMTetq7bMWlf4FOzcUpizJOYz1Lhnh3qqkuCxmUUEwY7L47eQmQUZ+kw8xbTTPuizoEF4qptp2Axyhnet84LQAOVp5ThhomkzaX+Xddqrw1ezZa9zkkx9Y1zv44zOIoiVZwLpJIxiplEw+cd8x4JBHSa4kLrCgeEk/WAd/I7irHMNd97F4wyfbDh+zh+ycFb1UChuLho2mqQgb5nEfDUmxKaCf9hkGgcACoRYkgxdQaK+dhWrojnOBxkq28VVXwkcU/HKpfQfBqe4ftGmIkTCe6JuXaVRxu5bB8NShCUb+KUeu48EzSTpGFkGCOXM3sQZnPCxEzhjJeglbziDMEyAGQzU6kvuvPQhA3OPws05l3GRx0P6CKsfwkBSsuatIhOmJa0YpahDWbq/k5qTbc2MxcGEa1BOPg0PvbV6Y8giYel9YZ1+CvAY9oQoXWEQq+vBFZOPTClsp4NQaNv4iG2nsWLXPuLHdUBdKhjFAIyWbA7RUI8ezzn27BhYrzqmDpFX7/3fbx71nv8=
+    secure: ZsyQfVOIjNvXAxr6HpeKZFfsRYFRBs3YywdxVh1Vqh+4DTMEmfA/vZhTwMffnom+cWhET8ntwVcSYgvxv2AriA+Ec5tyGB+bKl+dSQu477w/5/aHbzSPWM1tFG3+w7tO+iMeEX0V+0ow9jIhlvO7l+bNS8I0C5XSphfZOePy+dVreddOAA3G6bQBm5E8FdPjz2eBbRaz7ic4zaS0MasWW6a9OcDSZC/53qlrFu65BuvMw+t04Ej9DyuKPmAMyU4Uq3I5Ot1NuIwsSOKjFduAx5IPLdP36PyRA1IuCdnd2Cn+pf3v4k486HX9KgyIbgYliQ6HJTSesUIQDaQw3G/dagJLa7/PfJueoQSuAs7VVrgqfOdCikvtqGtEggCTPVlQ8D/Af1uxKITx9Jzs2LSx1wrWEqlTK4mZjZbM7+IwFn53DlbXLU7W8t+tYROL+pW/zvUSwXQynYpq7O6XrYh9pFUzGrXmunsVc6SK3UUPloSUPNF+QyiGfWNnJfGYiwHI6YcSGbiyKTORH5ot8suVfAp4GB/weTU5RkL7mFb3cVnyvifEAs0//3svR1d++0XEWhP8mzW7rt1G55ZUhBF8QpWd5+yG7oy6y33qKn48GCypvECYqDRw5qjE6e3axuz9OIzVgEIrQVx4iwze6+4F4OU2PI6NlclwsZPbqrzztYc=
   app: sf-log-analyzer
   skip_cleanup: true
   on:
