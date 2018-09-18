@@ -10,7 +10,7 @@ import { UtilService } from './services/util.service';
 import { SalesforceService } from './services/salesforce.service';
 
 // Import Routes
-import { SalesforceRoutes } from './routes/salesforce.routes';
+import { SessionRoutes } from './routes/session.routes';
 
 const app = express();
 app.use(express.static('public'));
@@ -26,7 +26,7 @@ const util = new UtilService();
 const salesforceService = new SalesforceService();
 
 // Instanciate Routes
-const salesforceRoutes = new SalesforceRoutes(util, salesforceService);
+const sessionRoutes = new SessionRoutes(util, salesforceService);
 
 // Log requests
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -36,9 +36,10 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 
 // Create Routes
 app.get('/', (req: Request, res: Response) => res.sendFile('/public/index.html', {root: './'}));
-app.post('/api/demo', salesforceRoutes.loginToDemo);
-app.post('/api/login', salesforceRoutes.login);
-app.get('/oauth2/callback', salesforceRoutes.completeLogin);
+app.post('/api/demo', sessionRoutes.loginToDemo);
+app.post('/api/login', sessionRoutes.login);
+app.get('/oauth2/callback', sessionRoutes.completeLogin);
+app.get('/api/session', sessionRoutes.nextIfAuthenticated, sessionRoutes.getSession);
 
 // Start Server
 app.listen(process.env.PORT, () => console.log(`Server online on port ${process.env.PORT}`));

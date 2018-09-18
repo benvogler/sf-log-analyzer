@@ -1,5 +1,10 @@
+<!-- Display loading spinner while logging in -->
+<sui-dimmer [(isDimmed)]="showSpinner">
+    <div class="ui text loader"></div>
+</sui-dimmer>
+
 <div class="login page" fxLayout="column" fxLayoutAlign="center center">
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" style="transform: translateX(-25px)">
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center" style="transform: translateX(-25px); margin-bottom: 10px">
         <img src="../assets/images/log2.svg" alt="Log Logo" style="width: 100px; height: auto; transform: rotate(45deg)" />
         <h1 class="ui huge header" style="font-size: 3.5rem; height: min-content; transform: translateY(-10px)">
             Salesforce Log Analyzer
@@ -15,25 +20,25 @@
             </div>
             <div class="content">
                 <div fxLayout="column">
-                    <div class="ui primary basic button salesforce-wrapper" (click)="login(false)">
+                    <div class="ui primary basic button inverted-hover salesforce-wrapper" (click)="login(false)">
                         <img src="../assets/images/salesforce.svg" alt="Salesforce Logo" class="salesforce-logo" /> Salesforce (Production, Developer)
                     </div>
-                    <div class="ui primary basic button salesforce-wrapper" (click)="login(true)">
+                    <div class="ui primary basic button inverted-hover salesforce-wrapper" (click)="login(true)">
                         <img src="../assets/images/salesforce.svg" alt="Salesforce Logo" class="salesforce-logo" /> Salesforce (Sandbox)
                     </div>
                 </div>
                 <div class="ui horizontal divider">Or</div>
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <div class="ui primary button" (click)="demo()">
+                    <div class="ui primary button" (click)="demo()" style="width: 100%">
                         Try a Demo
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="ui raised card" style="width: 100%">
+        <div class="ui raised card" style="width: 100%; margin-top: 40px">
             <div class="content">
-                <a class="ui black basic button" style="width: 100%" href="https://github.com/benvogler/sf-log-analyzer">
+                <a class="ui black basic button inverted-hover" style="width: 100%" href="https://github.com/benvogler/sf-log-analyzer">
                     <i class="github icon"></i>
                     View Project on GitHub
                 </a>

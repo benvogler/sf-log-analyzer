@@ -1,5 +1,11 @@
-<div class="container">
+<div class="container" *ngIf="!loading">
 
-    <app-login></app-login>
+    <div *ngIf="showApp; else login">
+        Welcolme to the app
+    </div>
+
+    <ng-template #login>
+        <app-login></app-login>
+    </ng-template>
 
 </div>

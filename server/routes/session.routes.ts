@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { SalesforceService } from '../services/salesforce.service';
 import { UtilService } from '../services/util.service';
 
-export class SalesforceRoutes {
+export class SessionRoutes {
 
     constructor(private util: UtilService, private salesforce: SalesforceService) {}
 
@@ -47,5 +47,11 @@ export class SalesforceRoutes {
     nextIfAuthenticated = (req: Request, res: Response, next: NextFunction) => {
         if (req.session && req.session.authentication && req.session.authentication.accessToken) next();
         else this.util.respond(res, 401, 'You must log in through Salesforce first');
+    }
+
+    getSession = (req: Request, res: Response, next: NextFunction) => {
+        let session = Object.create(req.session || {});
+        delete session.authorization;
+        this.util.respond(res, 200, session);
     }
 }

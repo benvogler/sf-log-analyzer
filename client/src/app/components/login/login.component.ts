@@ -8,17 +8,22 @@ import { SessionService } from '../../services/session.service';
 })
 export class LoginComponent implements OnInit {
 
+    showSpinner = false;
+
     constructor(private session: SessionService) { }
 
     ngOnInit() {
     }
 
     async login(isSandbox = false) {
+        this.showSpinner = true;
         await this.session.login(isSandbox);
     }
 
     async demo() {
+        this.showSpinner = true;
         await this.session.demo();
+        this.showSpinner = false;
     }
 
 }
