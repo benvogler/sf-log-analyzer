@@ -30,6 +30,7 @@ node_js:
 
 deploy:
   provider: heroku
+  api_key: fc1e15dc-424a-4c6f-b8af-c207dbf8492d
   app: sf-log-analyzer
   on:
     branch: dev
