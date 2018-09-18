@@ -15,16 +15,16 @@
             </div>
             <div class="content">
                 <div fxLayout="column">
-                    <div class="ui primary basic button salesforce-wrapper">
+                    <div class="ui primary basic button salesforce-wrapper" (click)="login(false)">
                         <img src="../assets/images/salesforce.svg" alt="Salesforce Logo" class="salesforce-logo" /> Salesforce (Production, Developer)
                     </div>
-                    <div class="ui primary basic button salesforce-wrapper">
+                    <div class="ui primary basic button salesforce-wrapper" (click)="login(true)">
                         <img src="../assets/images/salesforce.svg" alt="Salesforce Logo" class="salesforce-logo" /> Salesforce (Sandbox)
                     </div>
                 </div>
                 <div class="ui horizontal divider">Or</div>
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <div class="ui primary button">
+                    <div class="ui primary button" (click)="demo()">
                         Try a Demo
                     </div>
                 </div>
