@@ -12,7 +12,7 @@
     </div>
 
     <div>
-        <div class="ui raised card" style="width: unset">
+        <div class="ui raised card" style="width: min-content">
             <div class="content">
                 <div class="header">
                     Log In
@@ -20,7 +20,7 @@
             </div>
             <div class="content">
                 <div fxLayout="column">
-                    <div class="ui primary basic button inverted-hover salesforce-wrapper" (click)="login(false)">
+                    <div class="ui primary basic button inverted-hover salesforce-wrapper" (click)="login(false)" style="white-space: nowrap">
                         <img src="../assets/images/salesforce.svg" alt="Salesforce Logo" class="salesforce-logo" /> Salesforce (Production, Developer)
                     </div>
                     <div class="ui primary basic button inverted-hover salesforce-wrapper" (click)="login(true)">
