@@ -37,7 +37,7 @@ export interface TestStepEvent {
 export class TestStep {
     conditions: Condition[] = [];
     maxConditionId = -1;
-    private id: number;
+    id: number;
     typeOptions: Option[] = [];
     fieldOptions: Option[] = [];
     type: Option;
@@ -76,10 +76,6 @@ export class TestStep {
         if (!this.type) {
             this.type = this.typeOptions[0];
         }
-    }
-
-    getId(): number {
-        return this.id;
     }
 
     newCondition(): void {

@@ -47,7 +47,7 @@ export class TestExecutionComponent implements OnInit {
     }
 
     deleteStep(step: TestStep): void {
-        this.steps = this.steps.filter(currentStep => currentStep.getId() !== step.getId());
+        this.steps = this.steps.filter(currentStep => currentStep.id !== step.id);
         this.updateSteps();
     }
 
@@ -65,7 +65,7 @@ export class TestExecutionComponent implements OnInit {
             this.steps[i].previousVariables = JSON.parse(JSON.stringify(previousVariables));
             if (this.steps[i].variableName && this.steps[i].variableName !== '') {
                 previousVariables.push({
-                    id: this.steps[i].getId().toString(),
+                    id: this.steps[i].id.toString(),
                     name: this.steps[i].variableName
                 });
             }
@@ -133,7 +133,7 @@ export class TestExecutionComponent implements OnInit {
                 const id: string = event.payload.id;
                 console.log(id);
                 for (const step of this.steps) {
-                    if (step.getId().toString() === id) {
+                    if (step.id.toString() === id) {
                         console.log('found', step);
                         event.step.fieldOptions = step.fieldOptions;
                         event.step.subscribed = step;
@@ -144,7 +144,7 @@ export class TestExecutionComponent implements OnInit {
                 break;
             case TestStepEventType.unsubscribe:
                 // Remove the step from the subscribed step's subscriber list
-                event.step.subscribed.subscribers = event.step.subscribed.subscribers.filter(step => step.getId() !== event.step.getId());
+                event.step.subscribed.subscribers = event.step.subscribed.subscribers.filter(step => step.id !== event.step.id);
                 // Remove the step's reference to the subscribed step
                 event.step.subscribed = undefined;
                 event.step.updateVariable = undefined;

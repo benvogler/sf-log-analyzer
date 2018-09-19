@@ -23,7 +23,7 @@ export class ToolbarComponent implements OnInit {
     logService: LogService;
     debug = false;
     LogView = LogView;
-    showItems: Object;
+    showItems;
 
     constructor(logService: LogService, private route: ActivatedRoute, private router: Router, private http: HttpClient) {
         this.logService = logService;
