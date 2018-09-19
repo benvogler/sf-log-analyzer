@@ -1,0 +1,11 @@
+div.step-container {
+    width: 80%;
+    max-width: 600px;
+    margin-bottom: 50px;
+}
+
+.step-container.hide {
+    opacity: 0;
+    -webkit-transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
+}

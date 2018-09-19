@@ -1,0 +1,85 @@
+<div class="ui card" style="width: 100%; display: table">
+    <div class="content">
+        <form class="ui form">
+
+            <sui-dimmer class="inverted" [(isDimmed)]="step.formDimmed">
+                <div class="ui text loader"></div>
+            </sui-dimmer>
+
+            <div fxLayout="row" fxLayoutAlign="space-between start">
+                <h3 class="ui header">Step {{step.id}}</h3>
+                <button (click)="emitString('delete')" [disabled]="!step.canDelete" class="ui icon button" type="button" style="padding: 6px" suiPopup
+                    popupText="Delete Step" popupPlacement="top" popupDelay="300">
+                    <i class="trash icon"></i>
+                </button>
+            </div>
+            <div class="ui divider" style="margin-top: 0"></div>
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <div class="field" style="width: 200px; min-width: 200px">
+                    <label>Type</label>
+                    <sui-select class="selection" [(ngModel)]="step.type" [options]="step.typeOptions" labelField="name" [isSearchable]="false"
+                        [isDisabled]="false" [name]="'type' + step.id" (selectedOptionChange)="changeType()" #typeSelect>
+                        <sui-select-option *ngFor="let option of typeSelect.filteredOptions" [value]="option">
+                        </sui-select-option>
+                    </sui-select>
+                </div>
+                <div class="field" style="width: 100%" *ngIf="step.type && step.type.id === 'insert'; else updateVariable">
+                    <label>Object</label>
+                    <sui-select class="selection" [(ngModel)]="step.selectedSObject" [options]="metadataService.describeOptions | async" labelField="name" [isSearchable]="true"
+                        [name]="'sObjectSearch' + step.id" (selectedOptionChange)="setSObject($event)" (ngModelChange)="emitString('sObjectStartChange', $event)"
+                        #sObjectSelect>
+                        <sui-select-option *ngFor="let option of sObjectSelect.filteredOptions" [value]="option">
+                        </sui-select-option>
+                    </sui-select>
+                </div>
+                <ng-template #updateVariable>
+                    <div class="field" style="width: 100%">
+                        <label>Variable to Update</label>
+                        <div class="ui input">
+                            <sui-select class="selection" [(ngModel)]="step.updateVariable" [options]="step.previousVariables" labelField="name" [isSearchable]="true"
+                                [name]="'updateVariableSearch' + step.id" (ngModelChange)="emitString('subscribe', step.updateVariable)"
+                                style="width: 100%" #variableSelect>
+                                <sui-select-option *ngFor="let option of variableSelect.filteredOptions" [value]="option">
+                                </sui-select-option>
+                            </sui-select>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="field" style="width: 100%" *ngIf="step.type && step.type.id === 'insert'">
+                <label>Variable Name</label>
+                <div class="ui input">
+                    <input type="text" [(ngModel)]="step.variableName" (ngModelChange)="emitString('variableNameChange')" placeholder="Name" [name]="'insertNameInput' + step.id">
+                </div>
+            </div>
+            <div *ngFor="let pair of step.conditions" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+                <div class="field" style="width: 200px; min-width: 200px">
+                    <label>Field</label>
+                    <sui-select class="selection" [(ngModel)]="pair.field.selectedOption" [options]="step.fieldOptions" labelField="name" [isSearchable]="true"
+                        [name]="'fieldInput' + step.id + '' + pair.id" #select>
+                        <sui-select-option *ngFor="let option of select.filteredOptions" [value]="option">
+                        </sui-select-option>
+                    </sui-select>
+                </div>
+
+                <div class="field" style="width: 100%">
+                    <label>Value</label>
+                    <div class="ui input">
+                        <input type="text" [(ngModel)]="pair.value" placeholder="Value" [name]="'valueInput' + step.id + '' + pair.id">
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="center space-between" fxLayoutGap="10px">
+                    <button class="ui icon button field-button" (click)="step.newCondition('precondition')" type="button" suiPopup popupText="Add Field"
+                        popupPlacement="top" popupDelay="500">
+                        <i class="add icon"></i>
+                    </button>
+                    <button class="ui icon button field-button" (click)="step.removeCondition(pair)" [disabled]="step.conditions.length === 1"
+                        type="button" suiPopup popupText="Delete Field" popupPlacement="top" popupDelay="500">
+                        <i class="minus icon"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

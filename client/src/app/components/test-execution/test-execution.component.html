@@ -1,0 +1,84 @@
+<div class="page" fxLayout="column" fxLayoutAlign="start center" style="padding-top: 40px">
+    <div style="width: 100%; padding-left: 30px">
+        <h2 class="ui header">
+            <i class="bug icon"></i>
+            <div class="content">
+                Dynamic Apex Test Creation
+                <div class="sub header">
+                    Test the state of records after insert and update
+                    <button class="ui icon button" (click)="showExplanation = !showExplanation" style="padding: 2px">
+                        <i class="info icon"></i>
+                    </button>
+                </div>
+            </div>
+        </h2>
+        <div class="ui divider"></div>
+    </div>
+    <sui-accordion class="styled fluid" [ngStyle]="{'max-width': '600px', 'margin-bottom': '30px', 'width': '80%', 'display': showExplanation ? 'block' : 'none'}">
+        <sui-accordion-panel [isOpen]="true">
+            <div title fxLayout="row" fxLayoutAlign="space-between center">
+                <span>
+                    <i class="dropdown icon"></i>
+                    What is this?
+                </span>
+                <i class="close icon" style="transform: translateY(-3px)" (click)="showExplanation = false"></i>
+            </div>
+            <div content>
+                <p>Dynamic Apex Test Execution is a method of gathering data about your org through the use of a dynamically
+                    generated Apex test class. You can specify steps in which records are inserted and updated and what their fields should be.
+                    The dynamic Apex test will be created, run, and report back to you how these records were changed after each step.
+                    You'll be able to see that updating an <code>Opportunity</code>'s <code>Stage</code> changes a field of a
+                    custom object in your org that relates to the <code>Opportunity</code>, for example.</p>
+            </div>
+        </sui-accordion-panel>
+    </sui-accordion>
+
+    <div *ngFor="let step of steps; let i = index" class="step-container" [@fadeIn] [ngClass]="{'hide' : !step.show}">
+        <app-test-step [step]="step" (dim)="dim($event)" (event)="listen($event)" style="width: 100%"></app-test-step>
+
+        <div *ngIf="i < steps.length - 1" fxLayout="row" fxLayoutAlign="center center" style="transform: translateY(25px)">
+            <i class="big long arrow alternate down icon"></i>
+        </div>
+    </div>
+    <div class="ui card" style="width: 80%; max-width: 600px; display: table; margin-bottom: 50px">
+        <div class="content">
+            <h3 class="ui header">Test Execution</h3>
+            <div class="ui divider" style="margin-top: 0"></div>
+
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+
+                <button (click)="createStep()" class="ui right labeled icon button" type="button">
+                    <i class="add icon"></i>
+                    New Step
+                </button>
+
+                <button (click)="runTest()" class="ui right labeled blue icon button" type="button">
+                    <i class="play icon"></i>
+                    Run
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template let-context let-modal="modal" #modalTemplate>
+    <div class="header">Are you sure you want to run this test?</div>
+    <div class="content">
+        <p>
+            Temporary changes including Apex class, trace flag, and debug level creation will be made to your organization. These changes
+            are automatically rolled back but may be left over during a failure to execute.
+        </p>
+    </div>
+    <div class="actions">
+        <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
+        <button class="ui primary button" (click)="modal.approve('approved')" autofocus>OK</button>
+    </div>
+</ng-template>
+
+<sui-dimmer class="page" [(isDimmed)]="dimmed">
+    <h2 class="ui inverted header">
+        <div class="ui text loader">{{dimMessage}}</div>
+    </h2>
+</sui-dimmer>

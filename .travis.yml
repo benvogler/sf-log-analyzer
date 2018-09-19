@@ -30,7 +30,7 @@ node_js:
 
 deploy:
   provider: heroku
-  api_key: c9654d7f-66ae-4239-a306-67aa894b8fec
+  api_key: $HEROKUAPIKEY
   app: sf-log-analyzer
   skip_cleanup: true
   on:

@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "cd server && npm start",
-    "serve": "concurrently -n \"client,server\" \"cd client && npm serve\" \"cd server && npm serve\"",
+    "serve": "concurrently -n \"client,server\" \"cd client && npm run serve\" \"cd server && npm run serve\"",
     "build": "cd client && npm run build && cd ../server && npm run build"
   },
   "author": "Ben Vogler",

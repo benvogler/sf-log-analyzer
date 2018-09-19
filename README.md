@@ -17,6 +17,8 @@ Salesforce Log Analyzer uses this concept to
 
 This project consists of two parts, an Express server, and an Angular 6 front-end. Both parts use Typescript throughout.
 
+Travis-CI is used for Continuous Integration and Deployment to Heroku.
+
 ## Install and Run
 
 The project can be installed with:

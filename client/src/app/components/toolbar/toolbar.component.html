@@ -1,0 +1,43 @@
+<div class="ui bottom attached menu">
+    <div *ngIf="showItems.view" class="ui dropdown bottom left pointing item" style="margin-right: 0 !important" suiDropdown>
+        View
+        <div class="menu" suiDropdownMenu>
+            <a class="item" (click)="setView(LogView.table)">
+                <i class="table icon"></i>
+                Table
+            </a>
+            <a class="item" (click)="setView(LogView.console)">
+                <i class="terminal icon"></i>
+                Console
+            </a>
+            <a class="item" (click)="setView(LogView.graph)">
+                <i class="sitemap icon"></i>
+                Graph
+            </a>
+        </div>
+    </div>
+    <a class="ui item" *ngIf="showItems.debug" [ngClass]="debug ? 'active' : ''" (click)="toggleDebug()" suiPopup [popupText]="(debug ? 'Disable' : 'Enable') + ' debug filter'"
+        popupDelay="500">
+        <i class="bug icon"></i>
+        Debug
+    </a>
+    <a class="ui item" *ngIf="showItems.scope" [ngClass]="logService.scopeLog !== undefined ? 'active' : 'disabled'" (click)="logService.unscope()"
+        suiPopup [popupHeader]="logService.scopeLog ? logService.scopeLog.code : ''" popupText="Disable block scope filter" popupDelay="500">
+        <i class="target icon"></i>
+        Scope
+    </a>
+    <a class="ui item" *ngIf="showItems.hideEmpty" [ngClass]="logService.hideEmpty ? 'active' : ''" (click)="toggleHideEmpty()"
+        suiPopup [popupText]="(logService.hideEmpty ? 'Hide' : 'Show') + ' events with no children'" popupDelay="500">
+        <i class="eye slash outline icon"></i>
+        Hide Empty
+    </a>
+    <div class="right menu">
+        <div *ngIf="showItems.search" class="ui right aligned category search item">
+            <div class="ui transparent icon input">
+                <input class="prompt" type="text" placeholder="Search logs...">
+                <i class="search link icon"></i>
+            </div>
+            <div class="results"></div>
+        </div>
+    </div>
+</div>

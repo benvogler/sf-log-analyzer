@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SessionService } from './services/session.service';
 
 @Component({
     selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'sf-log-analyzer-client';
+
+    loading = true;
+    showApp = false;
+
+    constructor(private sessionService: SessionService) {
+        // Show the login page until there is a valid session
+        this.sessionService.session.subscribe(session => session ? this.showApp = true : this.showApp = false);
+        // Prevent flickering the login page if there is an existing section
+        this.sessionService.loading.subscribe(() => this.loading = false);
+    }
 }
