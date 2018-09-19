@@ -115,7 +115,7 @@ export class TestStepComponent implements OnInit {
         });
     }
 
-    emitString(type: string, payload: any) {
+    emitString(type: string, payload?: any) {
         if (TestStepEventType[type] !== undefined) {
             this.emit(TestStepEventType[type], payload);
         } else {

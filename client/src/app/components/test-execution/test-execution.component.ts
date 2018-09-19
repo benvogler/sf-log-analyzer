@@ -23,6 +23,7 @@ export class TestExecutionComponent implements OnInit {
     @ViewChild('modalTemplate')
     public modalTemplate: ModalTemplate<any, string, string>;
 
+    showExlanation = true;
     dimmed = true;
     dimMessage = 'Loading';
     steps: TestStep[] = [];
