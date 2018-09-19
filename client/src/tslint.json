@@ -2,6 +2,7 @@
     "extends": "../tslint.json",
     "rules": {
         "prefer-const": false,
+        "curly": false,
         "directive-selector": [
             true,
             "attribute",

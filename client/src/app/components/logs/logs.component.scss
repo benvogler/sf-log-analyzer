@@ -1,0 +1,21 @@
+.console-container {
+    font-family: 'Menlo Regular', monospace;
+    background-color: #282A36;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+.console-container {
+    min-height: 100%;
+    overflow-x: auto;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.graph-container {
+    padding: 50px;
+}

@@ -1,0 +1,63 @@
+<table *ngIf="logService.view === LogView.table" class="ui celled table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Time</th>
+            <th>Info</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let log of logService.logs">
+            <td>
+                <a *ngIf="log.isStart" class="ui label basic" (click)="logService.scope(log.id)" suiPopup popupText="Set the block scope filter to this block"
+                    popupDelay="750">
+                    <i class="arrow right icon"></i>
+                    {{log.code}}
+                </a>
+                <a *ngIf="log.isEnd" class="ui label basic" (click)="logService.unscope(log.id)" suiPopup popupText="Set the block scope filter to one level above this block"
+                    popupDelay="750">
+                    <i class="ban icon"></i>
+                    {{log.code}}
+                </a>
+                <div *ngIf="!log.isStart && !log.isEnd">{{log.code}}</div>
+            </td>
+            <td>{{log.time}}</td>
+            <td>{{log.content}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="logService.view === LogView.console" class="console-container">
+    <ul style="padding: 20px; margin: 0">
+        <li *ngFor="let log of logService.logs" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <span style="color: #5AF78E">{{log.time}}</span>
+            <span style="color: #53BBF0">{{log.code}}</span>
+            <span style="color: white">{{log.content}}</span>
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="logService.view === LogView.graph" class="graph-container">
+
+    <div class="ui relaxed divided list">
+
+        <div class="item" *ngFor="let row of graphRows; let i = index" [ngStyle]="{'padding-left': (i * 20) + 'px'}">
+            <div class="content">
+
+                <div class="ui breadcrumb" style="line-height: 40px">
+                    <span *ngFor="let node of row; let j = index">
+                        <span *ngIf="!logService.hideEmpty || (node.children && node.children.length > 0)">
+                            <a [ngClass]="{'ui image label': true, 'blue': node.id === selectedNodes[i]}" (click)="selectNode(node, i)">
+                                {{node.code}}
+                                <div class="detail">{{node.children ? node.children.length : 0}}</div>
+                            </a>
+                            <i class="right angle icon divider" *ngIf="j < row.length - 1"></i>
+                        </span>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

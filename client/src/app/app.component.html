@@ -4,8 +4,9 @@
         <app-sidebar></app-sidebar>
         <div class="sidebar-container">
             <div class="page">
-                content
+                <router-outlet #routerOutlet></router-outlet>
             </div>
+            <app-toolbar (changeView)="routerOutlet.changeView()"></app-toolbar>
         </div>
     </div>
 

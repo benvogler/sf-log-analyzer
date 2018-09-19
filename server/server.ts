@@ -11,6 +11,7 @@ import { SalesforceService } from './services/salesforce.service';
 
 // Import Routes
 import { SessionRoutes } from './routes/session.routes';
+import { SalesforceRoutes } from './routes/salesforce.routes';
 
 const app = express();
 app.use(express.static('public'));
@@ -27,6 +28,7 @@ const salesforceService = new SalesforceService();
 
 // Instanciate Routes
 const sessionRoutes = new SessionRoutes(util, salesforceService);
+const salesforceRoutes = new SalesforceRoutes(util, salesforceService);
 
 // Log requests
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -41,6 +43,9 @@ app.post('/api/login', sessionRoutes.login);
 app.get('/oauth2/callback', sessionRoutes.completeLogin);
 app.get('/api/session', sessionRoutes.nextIfAuthenticated, sessionRoutes.getSession);
 app.post('/api/logout', sessionRoutes.nextIfAuthenticated, sessionRoutes.logout);
+app.get('/api/sobjects', salesforceRoutes.getAllSObjects);
+app.get('/api/sobject/:name', salesforceRoutes.getSObject);
+app.post('/api/test/execute', sessionRoutes.nextIfAuthenticated, salesforceRoutes.executeTest);
 
 // Start Server
 app.listen(process.env.PORT, () => console.log(`Server online on port ${process.env.PORT}`));

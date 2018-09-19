@@ -7,3 +7,8 @@
 .sidebar-container {
     width: 100%;
 }
+
+.sidebar-container > .page {
+    height: calc(100% - 42px);
+    overflow: scroll;
+}

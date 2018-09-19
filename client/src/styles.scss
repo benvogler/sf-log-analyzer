@@ -12,3 +12,17 @@
     background-color: #2185d0!important;
     color: white !important;
 }
+
+/* Fix the modal centering */
+.page.transition.ui.dimmer > div  {
+    height: 100%;
+    width: 100%
+}
+
+.page.transition.ui.dimmer > div > div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
