@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+
 import { TestExecutionComponent } from './components/test-execution/test-execution.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TestStepComponent } from './components/test-step/test-step.component';

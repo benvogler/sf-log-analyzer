@@ -219,5 +219,4 @@ export class TestExecutionComponent implements OnInit, AfterViewInit {
             }
         });
     }
-
 }
