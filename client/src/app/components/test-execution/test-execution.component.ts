@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { trigger, style, state, animate, transition } from '@angular/animations';
+import { Router } from '@angular/router';
+import { TemplateModalConfig, ModalTemplate, SuiModalService } from 'ng2-semantic-ui';
 import { MetadataService } from '../../services/metadata.service';
 import { LogService } from '../../services/log.service';
 import { TestStep, Option, TestStepEvent, TestStepEventType } from '../test-step/test-step.component';
-import { TemplateModalConfig, ModalTemplate, SuiModalService } from 'ng2-semantic-ui';
 
 @Component({
     selector: 'app-test-execution',
@@ -25,13 +26,18 @@ export class TestExecutionComponent implements OnInit {
 
     showExplanation = true;
     dimmed = true;
+    showComplete = false;
     dimMessage = 'Loading';
     steps: TestStep[] = [];
 
-    constructor(private metadataService: MetadataService, private logService: LogService, private modalService: SuiModalService) {
+    constructor(private metadataService: MetadataService, private logService: LogService,
+                private modalService: SuiModalService, private router: Router) {
         this.createStep();
         this.metadataService.describeOptions.subscribe(() => {
-            if (this.dimMessage === 'Loading') this.dimmed = false;
+            if (this.dimMessage === 'Loading') {
+                this.showComplete = false;
+                this.dimmed = false;
+            }
         });
     }
 
@@ -40,8 +46,10 @@ export class TestExecutionComponent implements OnInit {
 
     dim(event: any): void {
         if (typeof event === 'boolean') {
+            this.showComplete = false;
             this.dimmed = event;
         } else if (typeof event === 'string') {
+            this.showComplete = false;
             this.dimMessage = event;
             this.dimmed = true;
         }
@@ -107,6 +115,7 @@ export class TestExecutionComponent implements OnInit {
             .open(config)
             .onApprove(result => {
                 this.dimMessage = 'Your test is running now';
+                this.showComplete = false;
                 this.dimmed = true;
                 const steps = [];
                 for (const step of this.steps) {
@@ -118,7 +127,13 @@ export class TestExecutionComponent implements OnInit {
                     });
                 }
                 this.logService.executeDynamicTest(steps)
-                .then(() => this.dimmed = false);
+                .then(() => {
+                    this.showComplete = true;
+                    window.setTimeout(() => {
+                        this.dimmed = false;
+                        this.router.navigate(['logs']);
+                    }, 500);
+                });
             });
     }
 

@@ -79,6 +79,12 @@
 
 <sui-dimmer class="page" [(isDimmed)]="dimmed">
     <h2 class="ui inverted header">
-        <div class="ui text loader">{{dimMessage}}</div>
+        <div *ngIf="!showComplete; else completed" class="ui text loader">{{dimMessage}}</div>
+        <ng-template #completed>
+            <div class="ui text">
+                <i class="check icon"></i>
+                <div>Done!</div>
+            </div>
+        </ng-template>
     </h2>
 </sui-dimmer>
