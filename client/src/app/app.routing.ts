@@ -41,7 +41,8 @@ const routes: Routes = [
                         ToolbarItems.file,
                         ToolbarItems.view,
                         ToolbarItems.debug,
-                        ToolbarItems.scope
+                        ToolbarItems.scope,
+                        ToolbarItems.search
                     ]
                 },
                 {
@@ -50,7 +51,8 @@ const routes: Routes = [
                         ToolbarItems.file,
                         ToolbarItems.view,
                         ToolbarItems.debug,
-                        ToolbarItems.scope
+                        ToolbarItems.scope,
+                        ToolbarItems.search
                     ]
                 },
                 {

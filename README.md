@@ -1,7 +1,7 @@
 # Salesforce Log Analyzer
 
 ## Online Demo
-Available [here](https://sf-log-analyzer.herokuapp.com/).
+Available [here](https://sf-log-analyzer.herokuapp.com/). Please allow the Heroku server a minute or two to start automatically after clicking.
 
 ## About
 
