@@ -15,6 +15,7 @@ export class LogsComponent implements OnInit {
     graphTemplate = '';
     selectedNodes: number[] = [];
     graphRows: Log[][] = [];
+    showExplanation = true;
 
     constructor(logService: LogService, private domSanitizer: DomSanitizer) {
         this.logService = logService;
