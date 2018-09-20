@@ -24,11 +24,17 @@
                 <i class="close icon" style="transform: translateY(-3px)" (click)="showExplanation = false"></i>
             </div>
             <div content>
-                <p>Dynamic Apex Test Execution is a method of gathering data about your org through the use of a dynamically
-                    generated Apex test class. You can specify steps in which records are inserted and updated and what their fields should be.
-                    The dynamic Apex test will be created, run, and report back to you how these records were changed after each step.
-                    You'll be able to see that updating an <code>Opportunity</code>'s <code>Stage</code> changes a field of a
-                    custom object in your org that relates to the <code>Opportunity</code>, for example.</p>
+                <p>
+                    Dynamic Apex Test Execution is a method of gathering data about your org through the use of a dynamically
+                    generated Apex test class. You can specify steps in which records are inserted and updated and what their
+                    fields should be. The dynamic Apex test will be created, run, and report back to you how these records
+                    were changed after each step. You'll be able to see that updating an
+                    <code>Opportunity</code>'s <code>Stage</code> changes a field of a custom object in your org that relates to the
+                    <code>Opportunity</code>, for example.
+                </p>
+                <p>
+                    Want a demo? <a (click)="autofillStep()">Click here</a> and we'll fill in some test data for you.
+                </p>
             </div>
         </sui-accordion-panel>
     </sui-accordion>
@@ -88,3 +94,10 @@
         </ng-template>
     </h2>
 </sui-dimmer>
+
+<app-message #testDataSuccess class="positive" style="margin-bottom: 10px" toast="true">
+    <div class="header">
+        Success!
+    </div>
+    <p>Click <b>Run <i class="play icon"></i></b> to run the test.</p>
+</app-message>

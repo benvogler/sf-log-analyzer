@@ -1,0 +1,4 @@
+<div [ngClass]="'ui message ' + (toast ? 'toast ' : '') + (visible ? 'visible ' : 'hide ') + (beforeInit ? 'no-animate ' : '') + class">
+    <i class="close icon" (click)="hide()" *ngIf="showClose"></i>
+    <ng-content></ng-content>
+</div>

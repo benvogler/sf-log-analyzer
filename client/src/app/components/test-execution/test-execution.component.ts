@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { trigger, style, state, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { TemplateModalConfig, ModalTemplate, SuiModalService } from 'ng2-semantic-ui';
 import { MetadataService } from '../../services/metadata.service';
 import { LogService } from '../../services/log.service';
-import { TestStep, Option, TestStepEvent, TestStepEventType } from '../test-step/test-step.component';
+import { TestStep, Option, TestStepEvent, TestStepEventType, TestStepComponent } from '../test-step/test-step.component';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
     selector: 'app-test-execution',
@@ -19,16 +20,23 @@ import { TestStep, Option, TestStepEvent, TestStepEventType } from '../test-step
         ]),
     ]
 })
-export class TestExecutionComponent implements OnInit {
+export class TestExecutionComponent implements OnInit, AfterViewInit {
 
     @ViewChild('modalTemplate')
     public modalTemplate: ModalTemplate<any, string, string>;
+
+    @ViewChild('testDataSuccess')
+    testDataSuccessToast: MessageComponent;
+
+    @ViewChildren(TestStepComponent)
+    public stepComponents: QueryList<TestStepComponent>;
 
     showExplanation = true;
     dimmed = true;
     showComplete = false;
     dimMessage = 'Loading';
     steps: TestStep[] = [];
+    isFillingTestData = false;
 
     constructor(private metadataService: MetadataService, private logService: LogService,
                 private modalService: SuiModalService, private router: Router) {
@@ -42,6 +50,10 @@ export class TestExecutionComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    ngAfterViewInit() {
+        this.stepComponents.notifyOnChanges();
     }
 
     dim(event: any): void {
@@ -176,12 +188,36 @@ export class TestExecutionComponent implements OnInit {
                 }
                 break;
             case TestStepEventType.sObjectCompleteChange:
+                if (this.isFillingTestData) {
+                    let comp: TestStepComponent = this.stepComponents.toArray()[0];
+                    comp.step.conditions[0].field.selectedOption = comp.step.fieldOptions.filter(field => field.id === 'Name')[0];
+                    this.isFillingTestData = false;
+                    this.testDataSuccessToast.show();
+                }
                 for (const step of event.step.subscribers) {
                     step.formDimmed = false;
                     step.fieldOptions = event.step.fieldOptions;
                 }
                 break;
         }
+    }
+
+    async autofillStep() {
+        let comp: TestStepComponent = this.stepComponents.toArray()[0];
+
+        this.isFillingTestData = true;
+        this.metadataService.describeOptions.subscribe(options => {
+            if (this.isFillingTestData) {
+                let option = options.filter(opt => opt.id === 'Account')[0];
+                comp.step.selectedSObject = option;
+                comp.setSObject(option);
+
+                comp.step.variableName = 'accountExample';
+                comp.step.conditions[0].value = 'Made-up Company #528';
+                // We still need to select the name field, but we'll have to wait for the event to fire since the field
+                // describes will be loading in still. This will be handled in the listen function
+            }
+        });
     }
 
 }
