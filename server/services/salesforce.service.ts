@@ -88,6 +88,9 @@ export class SalesforceService {
         try {
             let res: any = await this.createConnection(session).sobject(sObject).describe();
             res.fields = res.fields.filter(field => field.createable && field.updateable);
+            res.fields.forEach(field => {
+                if (field.type === 'picklist') console.log(field);
+            })
             return res;
         } catch (err) {
             return Promise.reject(err);

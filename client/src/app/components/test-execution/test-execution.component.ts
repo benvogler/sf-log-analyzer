@@ -77,7 +77,31 @@ export class TestExecutionComponent implements OnInit, AfterViewInit {
         this.updateSteps();
     }
 
+    populateReferenceConditions() {
+        this.steps.forEach((step, i) => {
+            // Get the steps that are the same data type of each condition
+            step.conditions.forEach(condition => {
+                let referenceOptions: Option[] = [];
+                this.steps.forEach((innerStep, j) => {
+                    console.log('i !== j', (i !== j), 'innerStep.type.id === \'insert\'', innerStep.type.id,
+                    'innerStep.sObject', innerStep.sObject, 'describe.name', innerStep.sObject.describe.name, 'condition.sObjectType',
+                    condition.sObjectType, step, innerStep, condition);
+                    if (i !== j && innerStep.type.id === 'insert' && innerStep.sObject &&
+                        innerStep.sObject.describe.name === condition.sObjectType) {
+                        referenceOptions.push({
+                            'id': innerStep.variableName,
+                            'name': innerStep.variableName
+                        });
+                    }
+                });
+                condition.referenceOptions = referenceOptions;
+                console.log('updated condition', condition);
+            });
+        });
+    }
+
     updateSteps(offset?: number): void {
+
         offset = offset || 0;
         const previousVariables: Option[] = [];
         for (let i = 0; i < this.steps.length; i++) {
@@ -180,6 +204,7 @@ export class TestExecutionComponent implements OnInit, AfterViewInit {
             // When the name input field changes, update the subscribers
             case TestStepEventType.variableNameChange:
                 this.updateSteps();
+                this.populateReferenceConditions();
                 break;
             // When the sObject field changes, dim the subscribers
             case TestStepEventType.sObjectStartChange:
@@ -188,6 +213,7 @@ export class TestExecutionComponent implements OnInit, AfterViewInit {
                 }
                 break;
             case TestStepEventType.sObjectCompleteChange:
+                this.populateReferenceConditions();
                 if (this.isFillingTestData) {
                     let comp: TestStepComponent = this.stepComponents.toArray()[0];
                     comp.step.conditions[0].field.selectedOption = comp.step.fieldOptions.filter(field => field.id === 'Name')[0];
@@ -198,6 +224,9 @@ export class TestExecutionComponent implements OnInit, AfterViewInit {
                     step.formDimmed = false;
                     step.fieldOptions = event.step.fieldOptions;
                 }
+                break;
+            case TestStepEventType.fieldChange:
+                this.populateReferenceConditions();
                 break;
         }
     }

@@ -17,6 +17,10 @@ interface Condition {
     field: Field;
     value: any;
     id: number;
+    picklistOptions?: Option[];
+    type: string;
+    sObjectType?: string;
+    referenceOptions?: Option[];
 }
 
 export enum TestStepEventType {
@@ -25,7 +29,8 @@ export enum TestStepEventType {
     subscribe,
     unsubscribe,
     sObjectCompleteChange,
-    sObjectStartChange
+    sObjectStartChange,
+    fieldChange
 }
 
 export interface TestStepEvent {
@@ -82,7 +87,7 @@ export class TestStep {
         // Make id 1 greater than the current greatest, or 1 if there are none
         this.maxConditionId += 1;
         const id = this.maxConditionId;
-        this.conditions.push({ id: id, field: { selectedOption: undefined }, value: undefined });
+        this.conditions.push({ id: id, field: { selectedOption: undefined }, value: undefined, type: undefined, picklistOptions: [] });
     }
 
     removeCondition(condition: Condition): void {
@@ -107,6 +112,8 @@ export class TestStepComponent implements OnInit {
     @Input() step: TestStep;
 
     lastInputTime = new Date();
+
+    fields = [];
 
     constructor(private modalService: SuiModalService, private metadataService: MetadataService,
         private logService: LogService) {
@@ -161,10 +168,12 @@ export class TestStepComponent implements OnInit {
     }
 
     setSObject(option: Option) {
+
         console.log(option);
         this.step.formDimmed = true;
         this.metadataService.getSObject(option.id)
             .then(sObject => {
+                console.log('sObject', sObject);
                 this.step.formDimmed = false;
                 if (!sObject) {
                     console.log('no sobject');
@@ -174,6 +183,7 @@ export class TestStepComponent implements OnInit {
                 this.step.sObject = sObject;
                 this.step.fieldOptions = [];
                 console.log('setting options');
+                this.fields = sObject.fields;
                 for (const field of sObject.fields) {
                     this.step.fieldOptions.push({
                         id: field.name,
@@ -186,9 +196,7 @@ export class TestStepComponent implements OnInit {
     }
 
     changeType(): void {
-        console.log('in change');
         if (this.step.type.id === 'insert') {
-            console.log('in insert');
             this.emit(TestStepEventType.unsubscribe, this.step.updateVariable);
             if (this.step.selectedSObject) {
                 this.setSObject(this.step.selectedSObject);
@@ -200,46 +208,28 @@ export class TestStepComponent implements OnInit {
         }
     }
 
-
-    /*
-    submit(): void {
-
-      const config = new TemplateModalConfig<any, string, string>(this.modalTemplate);
-
-      config.closeResult = 'closed!';
-
-      this.modalService
-        .open(config)
-        .onApprove(result => {
-          this.dim.emit('Your test is running now');
-
-          const initialFields = [];
-          const initialValues = [];
-          for (const pair of this.step.conditions) {
-            initialFields.push(pair.field.selectedOption.id);
-            initialValues.push(pair.value);
-          }
-          const updatedFields = [];
-          const updatedValues = [];
-          for (const pair of this.step.postconditions) {
-            updatedFields.push(pair.field.selectedOption.id);
-            updatedValues.push(pair.value);
-          }
-          console.log(this.step.sObject.describe.name);
-          console.log(initialFields);
-          console.log(initialValues);
-          console.log(updatedFields);
-          console.log(updatedValues);
-          this.logService.executeDynamicTest(
-            this.step.sObject.describe.name,
-            initialFields,
-            initialValues,
-            updatedFields,
-            updatedValues
-          ).then(res => {
-            this.dim.emit(false);
-          });
-        });
+    onChangeField(option: Option, condition: Condition) {
+        let updateField = true;
+        let field = this.fields.filter(f => f.name === option.id)[0];
+        if (!field) return;
+        console.log('using', field);
+        condition.type = field.type;
+        if (field.type === 'picklist') {
+            condition.picklistOptions = field.picklistValues.map(value => {
+                return {
+                    'id': value.value,
+                    'name': value.label
+                };
+            }) || [];
+            console.log('condition', condition);
+        } else if (field.type === 'reference') {
+            console.log('set sObjectType', condition.sObjectType);
+            condition.sObjectType = field.referenceTo[0];
+        }
+        this.emit(TestStepEventType.fieldChange, field);
     }
-    */
+
+    logPickist(data) {
+        console.log(data);
+    }
 }

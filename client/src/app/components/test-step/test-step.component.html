@@ -36,9 +36,15 @@
                     <div class="field" style="width: 100%">
                         <label>Variable to Update</label>
                         <div class="ui input">
-                            <sui-select class="selection" [(ngModel)]="step.updateVariable" [options]="step.previousVariables" labelField="name" [isSearchable]="true"
-                                [name]="'updateVariableSearch' + step.id" (ngModelChange)="emitString('subscribe', step.updateVariable)"
-                                style="width: 100%" #variableSelect>
+                            <sui-select class="selection"
+                                        [(ngModel)]="step.updateVariable"
+                                        [options]="step.previousVariables"
+                                        labelField="name"
+                                        [isSearchable]="true"
+                                        [name]="'updateVariableSearch' + step.id"
+                                        (ngModelChange)="emitString('subscribe', step.updateVariable)"
+                                        style="width: 100%"
+                                        #variableSelect>
                                 <sui-select-option *ngFor="let option of variableSelect.filteredOptions" [value]="option">
                                 </sui-select-option>
                             </sui-select>
@@ -52,11 +58,11 @@
                     <input type="text" [(ngModel)]="step.variableName" (ngModelChange)="emitString('variableNameChange')" placeholder="Name" [name]="'insertNameInput' + step.id">
                 </div>
             </div>
-            <div *ngFor="let pair of step.conditions" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+            <div *ngFor="let condition of step.conditions" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
                 <div class="field" style="width: 200px; min-width: 200px">
                     <label>Field</label>
-                    <sui-select class="selection" [(ngModel)]="pair.field.selectedOption" [options]="step.fieldOptions" labelField="name" [isSearchable]="true"
-                        [name]="'fieldInput' + step.id + '' + pair.id" #select>
+                    <sui-select class="selection" [(ngModel)]="condition.field.selectedOption" [options]="step.fieldOptions" labelField="name" [isSearchable]="true"
+                        [name]="'fieldInput' + step.id + '' + condition.id" (selectedOptionChange)="onChangeField($event, condition)" #select>
                         <sui-select-option *ngFor="let option of select.filteredOptions" [value]="option">
                         </sui-select-option>
                     </sui-select>
@@ -64,8 +70,35 @@
 
                 <div class="field" style="width: 100%">
                     <label>Value</label>
-                    <div class="ui input">
-                        <input type="text" [(ngModel)]="pair.value" placeholder="Value" [name]="'valueInput' + step.id + '' + pair.id">
+                    <div class="ui input" *ngIf="condition.type === 'string' || condition.type === undefined">
+                        <input type="text" [(ngModel)]="condition.value" placeholder="Value" [name]="'valueInput' + step.id + '' + condition.id">
+                    </div>
+                    <sui-select *ngIf="condition.type === 'picklist' && condition.picklistOptions !== undefined"
+                                class="selection"
+                                [(ngModel)]="condition.value"
+                                [options]="condition.picklistOptions"
+                                labelField="name"
+                                [isSearchable]="true"
+                                [name]="'picklistInput' + step.id + '' + condition.id"
+                                (selectedOptionChange)="logPickist($event)"
+                                #picklist>
+                        <sui-select-option *ngFor="let option of picklist.filteredOptions" [value]="option">
+                        </sui-select-option>
+                    </sui-select>
+                    <sui-select *ngIf="condition.type === 'reference'"
+                                class="selection"
+                                [(ngModel)]="condition.value"
+                                [options]="condition.referenceOptions"
+                                labelField="name"
+                                [isSearchable]="true"
+                                [name]="'refrenceInput' + step.id + '' + condition.id"
+                                (selectedOptionChange)="logPicklist($event)"
+                                #referencePicklist>
+                        <sui-select-option *ngFor="let option of referencePicklist.filteredOptions" [value]="option">
+                        </sui-select-option>
+                    </sui-select>
+                    <div *ngIf="condition.type !== 'string' && condition.type !== 'picklist' && condition.type !== 'reference'">
+                        {{condition.type}}
                     </div>
                 </div>
 
@@ -74,7 +107,7 @@
                         popupPlacement="top" popupDelay="500">
                         <i class="add icon"></i>
                     </button>
-                    <button class="ui icon button field-button" (click)="step.removeCondition(pair)" [disabled]="step.conditions.length === 1"
+                    <button class="ui icon button field-button" (click)="step.removeCondition(condition)" [disabled]="step.conditions.length === 1"
                         type="button" suiPopup popupText="Delete Field" popupPlacement="top" popupDelay="500">
                         <i class="minus icon"></i>
                     </button>
