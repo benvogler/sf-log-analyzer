@@ -22,11 +22,11 @@ app.use(cookieSession({
 }));
 app.use(json());
 
-// Instanciate Services
+// Instantiate Services
 const util = new UtilService();
 const salesforceService = new SalesforceService();
 
-// Instanciate Routes
+// Instantiate Routes
 const sessionRoutes = new SessionRoutes(util, salesforceService);
 const salesforceRoutes = new SalesforceRoutes(util, salesforceService);
 
